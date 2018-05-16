@@ -5,26 +5,52 @@ Created on Wed May 16 10:49:25 2018
 @author: evin
 """
 
-def traceToFile(traceFileName, string):
+def traceToFile(traceFileName, inputString):
+    """
+    Writes inputString to the file named traceFileName if trace is Enabled,
+    prints the inputString to the shell otherwise    
+    """
     if traceEnabled:
-        traceFileName.write("{}".format(string))
+        traceFileName.write("{}".format(inputString))
     else:
-        print "{}".format(string)
+        print "{}".format(inputString)
         
-def traceToFileEOL(traceFileName, string):
+def traceToFileEOL(traceFileName, inputString):
+    """
+    Writes inputString followed by a new line to the file named traceFileName
+    if trace is enabled, prints the inputString to the shell otherwise    
+    """
     if traceEnabled:
-        traceFileName.write("{}".format(string) + "\n")
+        traceFileName.write("{}".format(inputString) + "\n")
     else:
-        print "{}".format(string) + "\n"
+        print "{}".format(inputString) + "\n"
 
 def traceToFileLists(traceFileName, itemList, listName, itemName):
+    """
+    Writes the elements of itemList with the itemListName followed by each
+    element with the itemName tag, provided that it is not empty
+    """
     if itemList:
         traceToFileEOL(traceFileName, listName)
         for item in itemList:
             traceToFileEOL(traceFileName, itemName + str(item))
         traceToFileEOL(traceFileName, "")
-
+        
+def tracetoUsersExpDesVariables(userName, tMin, tMax, k, Ts, fCode):
+    """
+    Writes given parameters associated with userName to the file
+    """
+    traceToFileEOL(traceFileName, userName + " tMin: " + str(tMin)) 
+    traceToFileEOL(traceFileName, userName + " tMax: " + str(tMax))
+    traceToFileEOL(traceFileName, userName + " k: " + str(k))
+    traceToFileEOL(traceFileName, userName + " Ts: " + str(Ts))
+    traceToFileEOL(traceFileName, userName + " fCode: " + str(fCode))
+    traceToFileEOL(traceFileName, "")
+    
 def constructProjectionFileds(getID = False):
+    """
+    Constructs queryable projected fields dictionary for inputting find statement's project for mongodb 
+    """
     fields = { }
     if not getID:
         fields["_id"] = 0
@@ -35,6 +61,9 @@ def constructProjectionFileds(getID = False):
     return fields
 
 def constructQuery():
+    """
+    Constructs mongodb query dictionary for inputting find statement's query for mongodb 
+    """
     query = { }
     
     if userNames:
@@ -51,6 +80,10 @@ def constructQuery():
     return query
 
 def interpolateAndPlot(xIn, yIn, tIn, tMin, tMax, k, Ts, fCode):
+    """
+    interpolates given xIn, yIn acoording to times tMin, tMax and other inputs,
+    and plots them on a graph
+    """
 #    tIn = timeStamps#np.array(timeStamps)
 #    xIn = coordX#np.array(coordX)
 #    yIn = coordY#np.array(coordY)
@@ -79,8 +112,6 @@ def interpolateAndPlot(xIn, yIn, tIn, tMin, tMax, k, Ts, fCode):
 # Data
 abs_path = "C:\Users\evin\Documents\GitHub\experiment"
 
-# Functions
-
 # Trace files 
 rel_path = ""
 coreTraceFileName = "_RollingEyes_trace.txt"
@@ -105,6 +136,8 @@ from datetime import datetime
 # Database connection Parameters
 host = "localhost"
 port = 27017
+dbName = "mediaExposureTry"
+collectionName = "eyesRolling"
 
 # evina Configuration
 userName1 = "evina"
@@ -146,15 +179,15 @@ except ConnectionFailure, e:
     sys.stderr.write("Could not connect to MongoDB: %s" % e)
     sys.exit(1)
         
-dbh = client["mediaExposureTry"]
-collection = dbh["eyesRolling"]
+dbh = client[dbName]
+collection = dbh[collectionName]
 
 projection = constructProjectionFileds()
 query = constructQuery()
     
 resultList = list(collection.find( query, projection))
 
-# construct users empty dict-----------------------------------------------
+# construct users dict-----------------------------------------------
 users = { }
 for userName in userNames:
     users[userName] = { }
@@ -163,6 +196,7 @@ for userName in userNames:
             users[userName][field] = [info[field] for info in resultList if info[userNameVariable] == userName]
 #=========================================================================
             
+# identify x and y coordinatesand timestamps info of the users to give as input to interpolate and to use while plotting the graph
 xCoord = users[userName1][xCoordVariable]
 yCoord = users[userName1][yCoordVariable]
 timeStamps = users[userName1][timeStampVariable]
@@ -194,20 +228,26 @@ traceToFileLists(traceFileName, sessions, "Extracted Sessions:", "Session: ")
 traceToFileLists(traceFileName, projectionFields, "Extracted Fileds:", "Field: ")
 traceToFileLists(traceFileName, relativeTime, "Extracted Time Period:", "relativeTime: ")
 
+tracetoUsersExpDesVariables(userName1, tMin, tMax, k, Ts, fCode)
+tracetoUsersExpDesVariables(userName2, tMinUser, tMaxUser, kUser, TsUser, fCodeUser)
 
 # ============================================================================================================
 # 6. Implement Experiment --------------------------------------------------------------------------------------------
 
+#interpolate xCoord and yCoord with the timeStamps and other inputs for first user
 interpolatedXOnTime = interpolateBS(timeStamps, xCoord, tMin, tMax, k, Ts, fCode)
 interpolatedYOnTime = interpolateBS(timeStamps, yCoord, tMin, tMax, k, Ts, fCode)
-    
+
+#sample the time and evaluate interpolation on sampledTime for first user
 sampledTime = np.linspace(tMin, tMax, 1000)
 interpolatedXOnSampledTime = splev(sampledTime, interpolatedXOnTime)
 interpolatedYOnSampledTime = splev(sampledTime, interpolatedYOnTime)
     
+#interpolate xCoord and yCoord with the timeStamps and other inputs for second user
 interpolatedXOnTimeUser = interpolateBS(timeStampsUser, xCoordUser, tMinUser, tMaxUser, kUser, TsUser, fCodeUser)
 interpolatedYOnTimeUser = interpolateBS(timeStampsUser, yCoordUser, tMinUser, tMaxUser, kUser, TsUser, fCodeUser)
     
+#sample the time and evaluate interpolation on sampledTime for second user
 sampledTimeUser = np.linspace(tMinUser, tMaxUser, 1000)
 interpolatedXOnSampledTimeUser = splev(sampledTimeUser, interpolatedXOnTimeUser)
 interpolatedYOnSampledTimeUser = splev(sampledTimeUser, interpolatedYOnTimeUser)
