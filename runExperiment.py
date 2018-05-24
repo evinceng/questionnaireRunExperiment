@@ -144,16 +144,16 @@ userName1 = "evina"
 Ts = 0.5 # Sampling frequency
 fCode = 1
 k = 3 
-tMin = 1.6
-tMax = 5
+tMin = 1.6 #0.5
+tMax = 5   # 9.5 
 
 # user2 Configuration
 userName2 = "user2"
 TsUser = 0.5 # Sampling frequency
 fCodeUser = 1
 kUser = 3 
-tMinUser = 3 # 1.49
-tMaxUser = 9 # 10.2
+tMinUser = 1 # 1.49 #0.018
+tMaxUser = 6 # 10.2 # 6.8
 
 # fieldNames variables
 xCoordVariable = "leftGaze:x"
@@ -164,7 +164,7 @@ userNameVariable = "userName"
 
 # query variables
 userNames = [ userName1, userName2] # "evina", "user2",
-sessions = [ ] #  "evina2018-05-10 14:33:21.185000", "user22018-05-14 12:06:23.842000",
+sessions = ["user22018-05-18 13:56:11.521000", "evina2018-05-18 13:50:15.285000" ] #  "evina2018-05-10 14:33:21.185000", "user22018-05-14 12:06:23.842000",   #2222 user22018-05-18 13:56:11.521000, evina2018-05-18 13:50:15.285000
 projectionFields = [ "userName", "relativeTime", "leftGaze:x", "leftGaze:y" ]
 relativeTime = [ ] # start, end # it will get all times if not provided
 

@@ -7,7 +7,7 @@ Preperation:
 3. Open the Mvc.py, go to  Run-> Configuration per file 
 4. In the "General Settings" section check "Command line options" if not checked and enter the username (for ex: evina)
 5. Press OK button 
-6. Have following ields in config:
+6. Have following fields in config:
     [MONGODB]
     Host = localhost
     Port = 27017
@@ -15,10 +15,11 @@ Preperation:
     
     [TOBII]
     DBCollectionName = eyesRolling
-  
+
+7. Open the circle in the experiment folder
+
 Run:
 1. Run the Mvc.py file
-2. Open the circle in the experiment folder
 3. Press the start button through exposuremeter
 4. Press Connect button via tobii eytracker dotnet app
 5. Start rolling eyes on the circle
