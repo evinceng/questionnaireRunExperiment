@@ -99,7 +99,15 @@ def interpolateAndPlot(xIn, yIn, tIn, tMin, tMax, k, Ts, fCode):
     ax.scatter(xIn, yIn, c=tIn, cmap=cm.seismic)
     ax.plot(interpolatedXOnSampledTime, interpolatedYOnSampledTime, color="green")
     ax.legend()
-    plt.show()     
+    plt.show()    
+
+def getAbsPath(fileName):
+    """
+    returns absolute path of a given fileName
+    """
+    APP_FOLDER = os.getcwd()#path.dirname(os.path.realpath(sys.argv[0]))
+    filePath = os.path.join(APP_FOLDER, fileName)
+    return filePath
 # ===========================================================================================================        
 ## 1. Short description -------------------------------------------------------------------------------------
 # @brief An analysis to see two circles on a graph via interpolating two users rolling eyes eyeGaze information through time  
@@ -110,8 +118,8 @@ def interpolateAndPlot(xIn, yIn, tIn, tMin, tMax, k, Ts, fCode):
 # ===========================================================================================================
 ## 2. Configuration, libraries -----------------------------------------------------------------------------
 # Data
+#abs_path = "C:\Users\evin\Documents\GitHub\experiment"
 abs_path = "C:\Users\evin\Documents\GitHub\experiment"
-
 # Trace files 
 rel_path = ""
 coreTraceFileName = "_RollingEyes_trace.txt"
@@ -209,7 +217,7 @@ timeStampsUser = users[userName2][timeStampVariable]
 currentTime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 #traceFileName = abs_path + rel_path + currentTime + coreTraceFileName
 if traceEnabled:
-    path = os.path.abspath(os.path.join(abs_path, currentTime + coreTraceFileName))
+    path = getAbsPath(currentTime + coreTraceFileName)
     traceFileName = open(path, "w")
 
 
@@ -261,7 +269,7 @@ ax.plot(interpolatedXOnSampledTime, interpolatedYOnSampledTime, color="green")
 ax.plot(interpolatedXOnSampledTimeUser, interpolatedYOnSampledTimeUser, color="yellow")
 ax.legend()
 plt.show()
-figPath = os.path.abspath(os.path.join(abs_path, currentTime + "_RollingEyes.pdf"))
+figPath = getAbsPath(currentTime + "_RollingEyes.pdf")
 plt.savefig(figPath)
 
 ## Close trace files -------------------------------------------------------------------------------------------------

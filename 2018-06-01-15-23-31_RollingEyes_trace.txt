@@ -1,0 +1,31 @@
+An analysis to see two circles on a graph via interpolating two users eyeGaze information taken from Tobii eyetracker through time, while rolling eyes
+Time: 2018-06-01-15-23-31
+OS: Windows
+Python ver: 2.7.14
+
+Extracted Users:
+User: evina
+User: user2
+
+Extracted Sessions:
+Session: user22018-05-18 13:56:11.521000
+Session: evina2018-05-18 13:50:15.285000
+
+Extracted Fileds:
+Field: userName
+Field: relativeTime
+Field: leftGaze:x
+Field: leftGaze:y
+
+evina tMin: 1.6
+evina tMax: 5
+evina k: 3
+evina Ts: 0.5
+evina fCode: 1
+
+user2 tMin: 1
+user2 tMax: 6
+user2 k: 3
+user2 Ts: 0.5
+user2 fCode: 1
+
