@@ -127,13 +127,30 @@ for i in range(0, len(yCoord)):
     if isinstance(yCoord[i], Number):
         yCoordNumeric.append(yCoord[i])
         xCoordNumeric.append(xCoord[i])
-   
+
+nonNumericxCoord = list(set(xCoord) - set(xCoordNumeric))
+print nonNumericxCoord
+nonNumericyCoord = list(set(yCoord) - set(yCoordNumeric))
+print nonNumericyCoord
+
 #Plot figures
-plt.scatter(xCoordNumeric, yCoordNumeric)
-plt.title(yCoordVariable + " versus " + xCoordVariable)
-plt.xlabel(xCoordVariable)
-plt.ylabel(yCoordVariable)
+#plt.scatter(xCoordNumeric, yCoordNumeric)
+#plt.title(yCoordVariable + " versus " + xCoordVariable)
+#plt.xlabel(xCoordVariable)
+#plt.ylabel(yCoordVariable)
+
+
+#f = plt.figure()
+f, axes = plt.subplots(nrows = 2, ncols = 1, sharex=True)
+axes[0].scatter(xCoordNumeric, yCoordNumeric)
+axes[0].set_xlabel(xCoordVariable)
+axes[0].set_ylabel("Numeric answers")
+axes[1].scatter(nonNumericxCoord, nonNumericyCoord)
+axes[1].set_xlabel(xCoordVariable)
+axes[1].set_ylabel("Non Numeric answers")
+plt.tight_layout()
 plt.show()
+
 figPath = FileUtils.getAbsPath(currentTime + "_Questionnaire.pdf")
 plt.savefig(figPath)
 
