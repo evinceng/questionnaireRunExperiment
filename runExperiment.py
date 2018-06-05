@@ -58,7 +58,7 @@ userNameVariable = "userName"
 
 # query variables
 userNames = [ userName1 ] # "evina", "user2",
-sessions = ["evina2018-06-01 16:02:59.355000" ]
+sessions = ["evina2018-06-05 12:00:29.266000" ]
 projectionFields = [ "userName", "relativeTime", "answer" ]
 relativeTime = [ ] # start, end # it will get all times if not provided
 
@@ -128,9 +128,9 @@ for i in range(0, len(yCoord)):
         xCoordNumeric.append(xCoord[i])
 
 nonNumericxCoord = list(set(xCoord) - set(xCoordNumeric))
-print nonNumericxCoord
+#print nonNumericxCoord
 nonNumericyCoord = list(set(yCoord) - set(yCoordNumeric))
-print nonNumericyCoord
+#print nonNumericyCoord
 
 #Plot figures
 #plt.scatter(xCoordNumeric, yCoordNumeric)
