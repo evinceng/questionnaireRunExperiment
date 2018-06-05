@@ -150,7 +150,7 @@ axes[1].set_ylabel("Non Numeric answers")
 plt.tight_layout()
 plt.show()
 
-figPath = FileUtils.getAbsPath(currentTime + "_Questionnaire.pdf")
+figPath = FileUtils.getAbsPath(currentTime + "_Questionnaire.png")
 plt.savefig(figPath)
 
 ## Close trace files -------------------------------------------------------------------------------------------------
