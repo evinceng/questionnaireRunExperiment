@@ -8,8 +8,9 @@ Preperation:
     Port = 27017
     DBName = mediaExposureTry
     
-    [TOBII]
-    DBCollectionName = finalAnswersQuest
+    [QUESTIONNAIRE] 
+    DBCollectionName = questionnaire
+    FinalAnswersCollectionName = finalAnswersQuest
 
 Run:
 1. Run the Mvc.py file
@@ -36,12 +37,11 @@ userName1 = "evina" #the username that you inputted in step 2 above
 xCoordVariable = "relativeTime"
 yCoordVariable = "answer"
 timeStampVariable = "relativeTime"
-colorUponVariable = "relativeTime"
 userNameVariable = "userName"
 
 # query variables
 userNames = [ userName1 ] # "evina", "user2",
-sessions = ["evina2018-06-01 16:02:59.355000" ]
+sessions = ["evina2018-06-01 16:02:59.355000" ] # put your sessionID from DB
 projectionFields = [ "userName", "relativeTime", "answer" ]
 relativeTime = [ ] # start, end # it will get all times if not provided
 

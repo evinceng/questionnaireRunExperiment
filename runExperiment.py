@@ -54,7 +54,6 @@ userName1 = "evina"
 xCoordVariable = "relativeTime"
 yCoordVariable = "answer"
 timeStampVariable = "relativeTime"
-colorUponVariable = "relativeTime"
 userNameVariable = "userName"
 
 # query variables
